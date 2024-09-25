@@ -1,0 +1,9 @@
+.app-footer {
+  .v-footer {
+    position: absolute;
+  }
+  span {
+    margin: auto;
+    color: #fff;
+  }
+}

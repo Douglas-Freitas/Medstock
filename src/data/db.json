@@ -1,0 +1,67 @@
+{
+  "user": [
+    {
+      "id": "1",
+      "mail": "test",
+      "password": "123",
+      "roule": {
+        "name": "Administrador"
+      }
+    },
+    {
+      "id": "1",
+      "mail": "notadmin",
+      "password": "123",
+      "roule": {
+        "name": "User"
+      }
+    }
+  ],
+  "medicine": [
+    {
+      "name": "Diazepam",
+      "validity": "25/06/2026",
+      "quantity": "1",
+      "activePrinciple": "benzodiazepínicos",
+      "id": "1",
+      "medicationInterval": "8",
+      "vendor": "test"
+    },
+    {
+      "name": "Dipirona",
+      "validity": "10/02/2026",
+      "quantity": "1",
+      "id": "2"
+    },
+    {
+      "id": "3",
+      "name": "testt",
+      "validity": "01/02/1999",
+      "quantity": "2",
+      "activePrinciple": "test"
+    }
+  ],
+  "collection-point": [
+    {
+      "id": "50ce",
+      "name": "Rua Dr Test 12"
+    }
+  ],
+  "posts": [
+    {
+      "id": "1",
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "comments": [
+    {
+      "id": "1",
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}
