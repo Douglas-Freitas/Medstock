@@ -14,25 +14,26 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <p v-if="scannedCode">Código de Barras: {{ scannedCode }}</p>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import Quagga from 'quagga';
+import type Medicine from '../../types/medicine'
+import medicineAPI from '@/modules/medicine/API/medicineAPI'
 
 export default defineComponent ({
   name: 'ModalScanner',
   data() {
     return {
       showScanner: false,
-      scannedCode: ''
+      scannedCode: '',
+      medicine: {} as Medicine
     }
   },
   methods: {
     startScanner() {
-      debugger
       this.showScanner = true;
       // Use nextTick para garantir que o DOM está atualizado
       this.$nextTick(() => {
@@ -69,6 +70,7 @@ export default defineComponent ({
 
     async fetchData(code: string) {
       try {
+      //code = "7896004782546"; codigo dipirona
         const response = await fetch(`https://api.cosmos.bluesoft.com.br/gtins/${code}`,{
           method: "GET",
           headers: {
@@ -80,8 +82,13 @@ export default defineComponent ({
           throw new Error(`Erro: ${response.statusText}`);
         }
         const data = await response.json();
+        if(data){
+          debugger
+          this.medicine.name = data.description;
+          medicineAPI.save(this.medicine);
+          medicineAPI.list();
+        }
         console.log('Dados recebidos:', data);
-        // Aqui você pode fazer algo com os dados recebidos, por exemplo, atualizar o estado
       } catch (error) {
         console.error('Erro ao buscar dados:', error);
       }

@@ -14,6 +14,8 @@ import * as directives from 'vuetify/directives'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 
+import VueTheMask from 'vue-the-mask'
+
 import { initializeApp } from 'firebase/app';
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
 
@@ -70,7 +72,7 @@ const vuetify = createVuetify({
   directives
 })
 
-
+app.use(VueTheMask)
 app.use(vuetify)
 app.use(createPinia())
 app.use(router)

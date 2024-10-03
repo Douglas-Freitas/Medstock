@@ -21,11 +21,12 @@
     {
       "name": "Diazepam",
       "validity": "25/06/2026",
-      "quantity": "1",
+      "quantity": "3",
       "activePrinciple": "benzodiazepínicos",
       "id": "1",
-      "medicationInterval": "8",
-      "vendor": "test"
+      "medicationInterval": "7",
+      "vendor": "test",
+      "useAlert": "true"
     },
     {
       "name": "Dipirona",
@@ -39,6 +40,23 @@
       "validity": "01/02/1999",
       "quantity": "2",
       "activePrinciple": "test"
+    },
+    {
+      "id": "d437",
+      "useAlert": "true",
+      "name": "Test",
+      "validity": "01/02/1999",
+      "quantity": "8",
+      "batch": "qw",
+      "vendor": "test",
+      "medicationInterval": "1"
+    },
+    {
+      "id": "01b0",
+      "name": "DIPIRONA MONOIDRATADA 1G EMS CAIXA 10 COMPRIMIDOS",
+      "validity": "01/02/9999",
+      "quantity": "12",
+      "useAlert": "false"
     }
   ],
   "collection-point": [

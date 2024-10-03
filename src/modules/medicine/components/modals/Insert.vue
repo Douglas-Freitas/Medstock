@@ -15,7 +15,7 @@
 
         <v-row>
           <v-col>
-            <v-text-field label="Validade" v-model="medicine.validity"
+            <v-text-field label="Validade" v-mask="'##/##/####'" v-model="medicine.validity"
             ></v-text-field>
           </v-col>
         </v-row>
@@ -40,6 +40,16 @@
 
         <v-row>
           <v-col>
+            <label>Deseja utilizar o alarme ?</label>
+           <v-radio-group v-model="medicine.useAlert">
+            <v-radio label="Sim" value="true"></v-radio>
+            <v-radio label="Não" value="false"></v-radio>
+          </v-radio-group>
+          </v-col>
+        </v-row>
+
+        <v-row>
+          <v-col>
             <v-text-field type="number"
             placeholder="Defina a frequência, ex: a cada 8 horas."
              label="Intervalo de Medicação" v-model="medicine.medicationInterval"></v-text-field>
@@ -59,6 +69,7 @@
 <script lang="ts">
 import type Medicine from '../../types/medicine'
 import medicineAPI from '@/modules/medicine/API/medicineAPI'
+declare var cordova: any;
 
 export default {
   name: 'ModalInsertMedicine',
@@ -71,9 +82,32 @@ export default {
   },
   methods: {
     onConfirm() {
-      medicineAPI.save(this.medicine)
-      this.showDialog = false
-      location.reload()
+      var t = medicineAPI.save(this.medicine).then((resp: any) => {
+        this.medicine = resp.data
+        if(this.medicine.useAlert)
+          this.scheduleNotification(this.medicine)
+        
+          this.showDialog = false
+        location.reload()
+      })
+    },
+    // Função para agendar a notificação com base no medicamento cadastrado
+    scheduleNotification(medicine : Medicine) {
+      debugger
+      const intervalHours = medicine.medicationInterval; // Exemplo: o intervalo é definido pelo medicamento cadastrado
+      const medicineName = medicine.name;
+
+      // Agendar a notificação para o medicamento cadastrado
+      document.addEventListener('deviceready', function () {
+        cordova.plugins.notification.local.schedule({
+          id: medicine.id,
+          title: 'Hora de tomar o medicamento',
+          text: `Está na hora de tomar o ${medicineName}.`,
+          trigger: { every: intervalHours, unit: 'minute' },
+          sound: null,
+          foreground: true
+        });
+      }, false);
     }
   }
 }

@@ -19,6 +19,10 @@ class MedicineAPI {
   update(medicine: Medicine): Promise<any> {
     return baseAPI.put(`${router}/${medicine.id}`, medicine)
   }
+  
+  getById(id: any): Promise<Medicine> {
+    return baseAPI.get(`${router}/${id}`);
+  }
 }
 
 export default new MedicineAPI()

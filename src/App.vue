@@ -50,13 +50,17 @@
 <script lang="ts">
 import { RouterView } from 'vue-router'
 import { useUserStore } from '@/stores/user'
+import type Medicine from '../src/modules/medicine/types/medicine'
+import medicineAPI from '@/modules/medicine/API/medicineAPI'
+declare var cordova: any;
 
 export default {
   data() {
     return {
       drawer: false,
       imgUrl: new URL('@/assets/logo.png', import.meta.url).href,
-      isAdminUser: false
+      isAdminUser: false,
+      medicine: {} as Medicine,
     }
   },
   mounted() {
@@ -71,6 +75,41 @@ export default {
     } else {
       //this.$router.push('/user/login')
     }
+
+    document.addEventListener('deviceready', this.setupNotificationListener, false);
+  },
+  methods:{
+    setupNotificationListener() {
+      cordova.plugins.notification.local.on('click', this.handleNotificationClick);
+    },
+
+    decreaseStock(item:Medicine){
+      alert('tentando decremento')
+      item.quantity -= 1
+
+      if(item.quantity == 0){
+        cordova.plugins.notification.local.cancel(item.id, function() {
+          console.log(`Notificação com ID ${item.id} cancelada.`);
+        });
+
+        medicineAPI.delete(item.id)
+      }
+      else
+        medicineAPI.update(item)
+    },
+
+    handleNotificationClick(notification : any) {
+      alert("notificatio ID: " + notification.id)
+      if(notification.id){
+        medicineAPI.getById(notification.id).then((resp: any) => {
+          this.medicine = resp.data
+          this.decreaseStock(this.medicine);
+        })
+        .catch((error: any) => {
+          alert(error);
+        });
+      }
+    },
   }
 }
 </script>

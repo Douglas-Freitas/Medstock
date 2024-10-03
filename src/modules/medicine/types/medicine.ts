@@ -2,8 +2,9 @@ export default interface Medicine {
   id: string
   name: string
   validity: string
-  quantity: string
+  quantity: number
   batch: string,
   vendor: string,
-  medicationInterval: number
+  medicationInterval: number,
+  useAlert: boolean
 }
